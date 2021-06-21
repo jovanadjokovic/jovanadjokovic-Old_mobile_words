@@ -41,12 +41,12 @@ let addNumber = (x, y, number) => {
         bitmap.scaleX=0.38
         bitmap.scaleY=0.38
         bitmap.name = number 
-        
         numbers.push(bitmap)
         stage.addChild(bitmap)
         stage.update()
         bitmap.addEventListener("click", () => {
-            audio.play();
+            let click=audio.cloneNode();
+            click.play();
             createjs.Tween.get(bitmap).to({scaleX: 0.37, scaleY: 0.37}, 100).call(() => {
                 stage.update()
                 createjs.Tween.get(bitmap).to({scaleX: 0.4, scaleY:0.4}, 200).call(() => {
@@ -96,7 +96,8 @@ function handleEraseLoad(event) {
     stage.addChild(bitmap);
     stage.update();
     bitmap.addEventListener("click", () => {
-        audio.play();
+        let click=audio.cloneNode();
+        click.play();
         createjs.Tween.get(bitmap).to({scaleX: 0.37, scaleY: 0.37}, 100).call(() => {
             stage.update()
             createjs.Tween.get(bitmap).to({scaleX: 0.4, scaleY:0.4}, 200).call(() => {
@@ -127,7 +128,8 @@ function handleBlueLoad(event) {
     stage.addChild(bitmap);
     stage.update();
     bitmap.addEventListener("click", () => {
-        audio.play();
+        let click=audio.cloneNode();
+        click.play();
         createjs.Tween.get(bitmap).to({scaleX: 0.37, scaleY: 0.37}, 100).call(() => {
             stage.update()
             createjs.Tween.get(bitmap).to({scaleX: 0.4, scaleY:0.4}, 200).call(() => {
@@ -137,14 +139,21 @@ function handleBlueLoad(event) {
                 })
             })
         })
+        console.log(word)
         
-        // fetch('localhost:3000/generate-words', {
-        //     method: 'POST',
-        //     body: JSON.stringify(word),
-        // }).then(response => response.json())
-        // .then(data => {
-        //   console.log('Success:', data);
-        // })
+        fetch('https://localhost:3000/generate-words', {
+            method: 'POST',
+            body: JSON.stringify(word),
+        }).then(response => {
+            console.log(response)
+            return response.json()}
+        )
+        .then(data => {
+          console.log('Success:', data);
+        })
+        .catch(()=> {
+            console.log('Failed to fetch') 
+        })
         
         // .then (response => {
         //     console.log(response)
