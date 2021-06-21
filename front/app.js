@@ -14,8 +14,8 @@ mobile.onload = handleImageLoad
 function handleImageLoad(event) {
     var image = event.target;
     var bitmap = new createjs.Bitmap(image);
-    bitmap.scaleX=0.5
-    bitmap.scaleY=0.5
+    bitmap.scaleX=0.33
+    bitmap.scaleY=0.33
     stage.addChild(bitmap);
     stage.update();
 }

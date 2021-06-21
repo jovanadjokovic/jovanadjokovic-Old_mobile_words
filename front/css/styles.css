@@ -1,0 +1,30 @@
+.elements {
+    font-family: Helvetica;
+    margin-left: auto;
+    margin-right: auto;
+    table-layout: fixed;
+    width: 100%;
+}
+
+.title {
+    text-align: center;
+    font-family: Helvetica;
+}
+
+.flex-container {
+    display: flex;
+    flex-direction: column;
+}
+
+#body {
+    background-color: #F5F5F5;
+}
+
+#mobileCanvas {
+    margin: 0 auto;
+    display:block;
+}
+
+.element {
+    text-align: center;
+}
