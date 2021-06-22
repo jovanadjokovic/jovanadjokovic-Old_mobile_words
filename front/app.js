@@ -1,4 +1,5 @@
 
+//import axios from 'axios'
 let stage = new createjs.Stage('mobileCanvas')
 window.stage = stage
 createjs.Touch.enable(stage)
@@ -136,85 +137,54 @@ async function handleBlueLoad(event) {
                 })
             })
         })
-        console.log(word)
         try {
-            let res = await generateWords(word)
-            console.log(res)
-            // res.then((data)=> {
-            //     console.log(data)
-            // }).catch(e=> {
-            //     console.log(e)
-            // })
-            // console.log(res)
+            let res =  await generateWords(word)
+            if (res.length===0) {
+                printNoWords()
+            } else {
+                printPossibilities(res)
+            }
+            
+        } catch (e) {
+            
+            console.log('Error:',e)
+            
+        }
+        
 
-        } catch(e) {
-            console.log('Error: '+e)
-        } 
         word=''
         showWord(word)
 
-        // fetch('http://localhost:3000/generate-words', {
-        //     method: 'POST',
-        //     body: JSON.stringify(word),
-        // }).then(response => {
-        //     console.log(response)
-        //     return response.json()}
-        // )
-        // .then(data => {
-        //   console.log('Success:', data);
-        // })
-        // .catch(()=> {
-        //     console.log('Failed to fetch') 
-        // })
-        
-        // .then (response => {
-        //     console.log(response)
-        //     word = ''
-        // })
-        //console.log()
-        //word = ''
         
 })
 
 }
 }
 
-generateWords = async (word) => {
+generateWords = (word) => {
 
 
-    let url = 'https://djokovic-old-mobile-words.herokuapp.com/generate-words'
+   //let url = 'https://djokovic-old-mobile-words.herokuapp.com/generate-words' 
+  let url = 'http://localhost:3000/generate-words' 
+    let data = {numbers: word}
 
-    let data = {numbers: "word"}
-
-    try {
-        let response = await fetch(url, {
+        let response = fetch(url, {
             method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+                // 'Content-Type': 'application/x-www-form-urlencoded',
+              },
             body: JSON.stringify(data),
         })
-        return response
-    } catch (e) {
-        console.log(e)
-    }
-//     fetch(url, {
-//         method: 'POST',
-//         body: JSON.stringify(data),
-//     })
-//     .then(response => response.json())
-//     .then(data => {
-//   console.log('Success:', data)
-//     })
-//     .catch((error) => {
-//     console.error('Error:', error)
-//     })
+        .then(response => response.json())
+        .then(data => {
+            return data
+        })
+        .catch(e=> {
+                console.log(e)
+            })
 
-    // try {
-    //     let combinations = await axios.post(url, data)
-    //     console.log('combinations je ')
-    //     console.log(combinations)
-    //     return combinations
-    // } catch(e) {
-    //     return "Can't generate words"
-    // }
+        return response
     
 
 }
@@ -224,6 +194,24 @@ showWord = (word) => {
     paragraph.innerHTML=word
 }
 
+
+let printPossibilities = (res) => {
+    let list = document.getElementById("possibilities")
+    let insideOfList = '' 
+    res.forEach((word) => {
+        insideOfList+=`<li>${word}`
+    })
+    list.innerHTML = insideOfList
+    let paragraph = document.getElementById("no-words");
+    paragraph.innerHTML=''
+}
+
+let printNoWords = () => {
+    let list = document.getElementById("possibilities")
+    list.innerHTML=''
+    let paragraph = document.getElementById("no-words");
+    paragraph.innerHTML='Sorry, there are no words from these numbers.'
+}
 
 
 dismissAll = function () {
