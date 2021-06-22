@@ -11,14 +11,22 @@
 <body id="body">
     <h1 class="title">Numbers To Words Convertor</h1>
     <table class="elements">
-        <td class="element">Click on button on mobile to find word combinations </td>
+        <td class="side-element"><h2>Instructions:</h2><ul>
+            <li>Click on numbers on phone keybord to make word from numbers</li>
+            <li>If you make mistake, click 'c' button to delete last entry</li>
+            <li>When you finish your input, click blue button to see possible T9 English words</li>
+        </ul></td>
         <td class="element"> <canvas id="mobileCanvas" width="316" height="720"></canvas></td>
-        <td class="element">Here is going to be result</td>
+        <td class="side-element"><div class = "flex-container">
+            <h2>Your numbers:</h2>
+            <p id="numbers"></p>
+            <h2>Possible words:</h2>
+        </div></td>
 
     </table>
 
 
-    
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <script src="https://code.createjs.com/1.0.0/createjs.min.js"></script>
     <script src="app.js"></script>
 </body>

@@ -1,6 +1,3 @@
-//let canvas = document.getElementById('mobileCanvas')
-//let ctx = c.getContext('2d')
-//ctx.moveTo(window.getInnerWidth/2,500)
 
 let stage = new createjs.Stage('mobileCanvas')
 window.stage = stage
@@ -58,7 +55,7 @@ let addNumber = (x, y, number) => {
             })
             
             word+=bitmap.name
-
+            showWord(word)
             
         })
     }
@@ -108,7 +105,7 @@ function handleEraseLoad(event) {
             })
         })
         word=word.substring(0,word.length-1)
-        
+        showWord(word)
         
     })
 }
@@ -118,7 +115,7 @@ blueButton.src = "images/enter.png"
 blueButton.onload = handleBlueLoad
 
 
-function handleBlueLoad(event) {
+async function handleBlueLoad(event) {
     var image = event.target;
     var bitmap = new createjs.Bitmap(image);
     bitmap.x=79  
@@ -127,7 +124,7 @@ function handleBlueLoad(event) {
     bitmap.scaleY=0.4
     stage.addChild(bitmap);
     stage.update();
-    bitmap.addEventListener("click", () => {
+    bitmap.addEventListener("click", async () => {
         let click=audio.cloneNode();
         click.play();
         createjs.Tween.get(bitmap).to({scaleX: 0.37, scaleY: 0.37}, 100).call(() => {
@@ -140,20 +137,35 @@ function handleBlueLoad(event) {
             })
         })
         console.log(word)
-        
-        fetch('https://localhost:3000/generate-words', {
-            method: 'POST',
-            body: JSON.stringify(word),
-        }).then(response => {
-            console.log(response)
-            return response.json()}
-        )
-        .then(data => {
-          console.log('Success:', data);
-        })
-        .catch(()=> {
-            console.log('Failed to fetch') 
-        })
+        try {
+            let res = await generateWords(word)
+            console.log(res)
+            // res.then((data)=> {
+            //     console.log(data)
+            // }).catch(e=> {
+            //     console.log(e)
+            // })
+            // console.log(res)
+
+        } catch(e) {
+            console.log('Error: '+e)
+        } 
+        word=''
+        showWord(word)
+
+        // fetch('http://localhost:3000/generate-words', {
+        //     method: 'POST',
+        //     body: JSON.stringify(word),
+        // }).then(response => {
+        //     console.log(response)
+        //     return response.json()}
+        // )
+        // .then(data => {
+        //   console.log('Success:', data);
+        // })
+        // .catch(()=> {
+        //     console.log('Failed to fetch') 
+        // })
         
         // .then (response => {
         //     console.log(response)
@@ -167,16 +179,64 @@ function handleBlueLoad(event) {
 }
 }
 
-addGraphics()
+generateWords = async (word) => {
+
+
+    let url = 'https://djokovic-old-mobile-words.herokuapp.com/generate-words'
+
+    let data = {numbers: "word"}
+
+    try {
+        let response = await fetch(url, {
+            method: 'POST',
+            body: JSON.stringify(data),
+        })
+        return response
+    } catch (e) {
+        console.log(e)
+    }
+//     fetch(url, {
+//         method: 'POST',
+//         body: JSON.stringify(data),
+//     })
+//     .then(response => response.json())
+//     .then(data => {
+//   console.log('Success:', data)
+//     })
+//     .catch((error) => {
+//     console.error('Error:', error)
+//     })
+
+    // try {
+    //     let combinations = await axios.post(url, data)
+    //     console.log('combinations je ')
+    //     console.log(combinations)
+    //     return combinations
+    // } catch(e) {
+    //     return "Can't generate words"
+    // }
+    
+
+}
+
+showWord = (word) => {
+    let paragraph = document.getElementById("numbers");
+    paragraph.innerHTML=word
+}
+
 
 
 dismissAll = function () {
 
+
     for (let i; i < this.children.length; i++) {
         createjs.Tween.removeTweens(this.children[i]);
       }
-  
+    this.removeAllChildren();
+    this.removeAllEventListeners();
 
 }
 
+
+addGraphics()
 //dismissAll()
