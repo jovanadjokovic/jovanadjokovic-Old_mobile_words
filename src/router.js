@@ -11,8 +11,6 @@ router.post('/generate-words', async (req, res) => {
     //console.log(englishWords)
     
     try {
-        console.log('post called')
-        console.log(req.body)
         const numbers = await req.body.numbers
         let words = combinations(numbers.toString(), [])
          const realWords = words.filter(word => englishWords.indexOf(word)>-1)
