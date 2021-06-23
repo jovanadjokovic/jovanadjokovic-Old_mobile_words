@@ -232,18 +232,4 @@ let printNoWords = () => {
     paragraph.innerHTML='Sorry, there are no words from these numbers.'
 }
 
-
-dismissAll = function () {
-
-
-    for (let i; i < this.children.length; i++) {
-        createjs.Tween.removeTweens(this.children[i]);
-      }
-    this.removeAllChildren();
-    this.removeAllEventListeners();
-
-}
-
-
 addGraphics()
-//dismissAll()

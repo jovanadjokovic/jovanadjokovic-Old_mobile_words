@@ -1,8 +1,7 @@
 const express = require('express')
 const router = new express.Router()
 
-const wordlist = require('wordlist-english')
-let englishWords = wordlist['english']
+
 
 // const dictionaryMap = require('./dictionary')
 const combinations = require('./combinations')
@@ -12,10 +11,10 @@ router.post('/generate-words', async (req, res) => {
     
     try {
         const numbers = await req.body.numbers
-        let words = combinations(numbers.toString(), [])
-         const realWords = words.filter(word => englishWords.indexOf(word)>-1)
+        let words = combinations(numbers)
+         //const realWords = words.filter(word => englishWords.indexOf(word)>-1)
 
-        res.send(realWords)
+        res.send(words)
 
     } catch (e) {
         res.status(404).send()
