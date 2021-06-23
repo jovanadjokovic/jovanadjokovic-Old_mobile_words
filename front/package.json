@@ -4,7 +4,6 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "jest --coverage",
     "start": "node front/index.js",
     "dev": "nodemon front/index.js"
   },
@@ -13,7 +12,5 @@
   "dependencies": {
     "nodemon": "^2.0.7"
   },
-  "devDependencies": {
-    "jest": "^27.0.5"
-  }
+  "devDependencies": {}
 }

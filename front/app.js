@@ -43,9 +43,6 @@ function handleImageLoad(event) {
 
 let audio = new Audio('./sounds/click.mp3');
 
-
-
-
 let addNumber = (x, y, number) => {
     
     let button = new Image();
