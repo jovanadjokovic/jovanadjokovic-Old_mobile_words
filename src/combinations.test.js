@@ -10,4 +10,10 @@ describe("Word combinations test", () => {
       test("Combination 55555 should return: []]", () => {
         expect(comb(55555)).toStrictEqual([]);
       });
+      test("Combination 42779 should return: []]", () => {
+        expect(comb(42779)).toStrictEqual([ 'gappy', 'happy', 'harpy', 'harry', 'gassy']);
+      });
+      test("Combination 87 should return: []]", () => {
+        expect(comb(87)).toStrictEqual([ 'up', 'ts', 'us']);
+      });
    })
