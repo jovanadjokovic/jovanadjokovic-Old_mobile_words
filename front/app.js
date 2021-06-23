@@ -1,9 +1,25 @@
+let cnvs = document.getElementById('mobileCanvas')
 
-//import axios from 'axios'
 let stage = new createjs.Stage('mobileCanvas')
 window.stage = stage
 createjs.Touch.enable(stage)
 let numbers=[]
+
+let findScale = () => {
+    let hScale = 5
+    let wScale = 5
+    if (window.innerHeight-100<720) {
+        hScale=(window.innerHeight-100)/720
+    }
+    if (window.innerWidth/3<316) {
+        wScale=window.innerWidth/(316*3) 
+    }
+    return Math.min(hScale, wScale, 1)
+}
+let scale = findScale()
+
+cnvs.height*=scale
+cnvs.width*=scale
 
 let word = ''
 let addGraphics = () => {
@@ -13,17 +29,21 @@ mobile.src = "images/Nokia_3310.png"
 mobile.onload = handleImageLoad
 
 
+
+
 function handleImageLoad(event) {
     var image = event.target;
     var bitmap = new createjs.Bitmap(image);
-    bitmap.scaleX=0.33
-    bitmap.scaleY=0.33
+    bitmap.scaleX=0.33*scale
+    bitmap.scaleY=0.33*scale
     stage.addChild(bitmap);
     stage.update();
 }
 
 
 let audio = new Audio('./sounds/click.mp3');
+
+
 
 
 let addNumber = (x, y, number) => {
@@ -34,10 +54,10 @@ let addNumber = (x, y, number) => {
     button.onload = (event) => {
         var image = event.target;
         var bitmap = new createjs.Bitmap(image)
-        bitmap.x=x
-        bitmap.y=y
-        bitmap.scaleX=0.38
-        bitmap.scaleY=0.38
+        bitmap.x=x*scale
+        bitmap.y=y*scale
+        bitmap.scaleX=0.38*scale
+        bitmap.scaleY=0.38*scale
         bitmap.name = number 
         numbers.push(bitmap)
         stage.addChild(bitmap)
@@ -45,11 +65,11 @@ let addNumber = (x, y, number) => {
         bitmap.addEventListener("click", () => {
             let click=audio.cloneNode();
             click.play();
-            createjs.Tween.get(bitmap).to({scaleX: 0.37, scaleY: 0.37}, 100).call(() => {
+            createjs.Tween.get(bitmap).to({scaleX: 0.37*scale, scaleY: 0.37*scale}, 100).call(() => {
                 stage.update()
-                createjs.Tween.get(bitmap).to({scaleX: 0.4, scaleY:0.4}, 200).call(() => {
+                createjs.Tween.get(bitmap).to({scaleX: 0.4*scale, scaleY:0.4*scale}, 200).call(() => {
                     stage.update()
-                    createjs.Tween.get(bitmap).to({scaleX: 0.38, scaleY: 0.38}, 50).call(() => {
+                    createjs.Tween.get(bitmap).to({scaleX: 0.38*scale, scaleY: 0.38*scale}, 50).call(() => {
                         stage.update()
                     })
                 })
@@ -67,7 +87,6 @@ let addNumber = (x, y, number) => {
 let y=455
 let x=28
 
-addNumber(x, y, 1)
 addNumber(x+79, y+10, 2)
 addNumber(x+170, y, 3)
 addNumber(x, y+45, 4)
@@ -87,20 +106,20 @@ eraseButton.onload = handleEraseLoad
 function handleEraseLoad(event) {
     var image = event.target;
     var bitmap = new createjs.Bitmap(image);
-    bitmap.x=29 
-    bitmap.y=370 
-    bitmap.scaleX=0.4
-    bitmap.scaleY=0.4
+    bitmap.x=29 *scale
+    bitmap.y=370 *scale
+    bitmap.scaleX=0.4*scale
+    bitmap.scaleY=0.4*scale
     stage.addChild(bitmap);
     stage.update();
     bitmap.addEventListener("click", () => {
         let click=audio.cloneNode();
         click.play();
-        createjs.Tween.get(bitmap).to({scaleX: 0.37, scaleY: 0.37}, 100).call(() => {
+        createjs.Tween.get(bitmap).to({scaleX: 0.37*scale, scaleY: 0.37*scale}, 100).call(() => {
             stage.update()
-            createjs.Tween.get(bitmap).to({scaleX: 0.4, scaleY:0.4}, 200).call(() => {
+            createjs.Tween.get(bitmap).to({scaleX: 0.4*scale, scaleY:0.4*scale}, 200).call(() => {
                 stage.update()
-                createjs.Tween.get(bitmap).to({scaleX: 0.38, scaleY: 0.38}, 50).call(() => {
+                createjs.Tween.get(bitmap).to({scaleX: 0.38*scale, scaleY: 0.38*scale}, 50).call(() => {
                     stage.update()
                 })
             })
@@ -119,20 +138,20 @@ blueButton.onload = handleBlueLoad
 async function handleBlueLoad(event) {
     var image = event.target;
     var bitmap = new createjs.Bitmap(image);
-    bitmap.x=79  
-    bitmap.y=355 
-    bitmap.scaleX=0.4
-    bitmap.scaleY=0.4
+    bitmap.x=79  *scale
+    bitmap.y=355 *scale
+    bitmap.scaleX=0.4*scale
+    bitmap.scaleY=0.4*scale
     stage.addChild(bitmap);
     stage.update();
     bitmap.addEventListener("click", async () => {
         let click=audio.cloneNode();
         click.play();
-        createjs.Tween.get(bitmap).to({scaleX: 0.37, scaleY: 0.37}, 100).call(() => {
+        createjs.Tween.get(bitmap).to({scaleX: 0.37*scale, scaleY: 0.37*scale}, 100).call(() => {
             stage.update()
-            createjs.Tween.get(bitmap).to({scaleX: 0.4, scaleY:0.4}, 200).call(() => {
+            createjs.Tween.get(bitmap).to({scaleX: 0.4*scale, scaleY:0.4*scale}, 200).call(() => {
                 stage.update()
-                createjs.Tween.get(bitmap).to({scaleX: 0.38, scaleY: 0.38}, 50).call(() => {
+                createjs.Tween.get(bitmap).to({scaleX: 0.38*scale, scaleY: 0.38*scale}, 50).call(() => {
                     stage.update()
                 })
             })
