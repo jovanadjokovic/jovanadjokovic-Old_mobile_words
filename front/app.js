@@ -165,7 +165,7 @@ async function handleBlueLoad(event) {
             }
             
         } catch (e) {
-            
+            printNoWords()
             console.log('Error:',e)
             
         }
